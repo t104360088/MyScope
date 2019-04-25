@@ -1,6 +1,8 @@
-package com.example.myscope.fragment
+package com.example.myscope.fragment.user
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +11,9 @@ import com.example.myscope.R
 import com.example.myscope.Response_Success
 import com.example.myscope.UserInfoSharedPreferences
 import com.example.myscope.activity.MainActivity
+import com.example.myscope.fragment.base.ObserverFragment
 import com.example.myscope.manager.ErrorMsg
-import com.example.myscope.manager.UserManager
+import com.example.myscope.manager.user.UserManager
 import kotlinx.android.synthetic.main.fragment_login.*
 import java.util.*
 
@@ -26,6 +29,7 @@ class LoginFragment : ObserverFragment() {
         setActionBar()
         setListen()
         getAccount()
+        Log.e("LoginFragment", "activity created")
     }
 
     //Mark:Action
@@ -46,7 +50,10 @@ class LoginFragment : ObserverFragment() {
                 Toast.makeText(mActivity, "請輸入帳號密碼", Toast.LENGTH_SHORT).show()
         }
         tv_sign_up.setOnClickListener {
-            (mActivity as MainActivity).switchTo(mActivity, SignUpFragment())
+            switchTo(SignUpFragment())
+        }
+        tv_forget.setOnClickListener {
+            switchTo(ForgetFragment())
         }
     }
 
@@ -84,11 +91,18 @@ class LoginFragment : ObserverFragment() {
             Response_Success -> {
                 saveAccount()
                 Toast.makeText(mActivity, "進入大廳", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(mActivity, MainActivity::class.java))
+                mActivity.finish()
             }
             is ErrorMsg -> {
                 enableEditText(true)
                 Toast.makeText(mActivity, arg.msg, Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.e("LoginFragment", "destroy")
     }
 }

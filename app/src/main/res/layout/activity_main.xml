@@ -9,7 +9,17 @@
 
     <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" android:id="@+id/fl_fragment">
+            android:layout_height="0dp"
+            android:id="@+id/fl_fragment"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toTopOf="@+id/navigation_bottom">
 
     </FrameLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            app:menu="@menu/navigation_bottom"
+            android:background="?android:attr/windowBackground"
+            android:layout_height="wrap_content" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/navigation_bottom"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

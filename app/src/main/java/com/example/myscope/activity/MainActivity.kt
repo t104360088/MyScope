@@ -1,12 +1,12 @@
 package com.example.myscope.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import com.example.myscope.fragment.LoginFragment
+import android.view.View
 import com.example.myscope.R
+import com.example.myscope.fragment.article.ArticleTabFragment
+import com.example.myscope.fragment.chat.ChatTabFragment
+import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class MainActivity : BaseActivity() {
@@ -15,31 +15,36 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        switchTo(this, LoginFragment())
+        setListen()
+        showNavigationBottom(true)
+        findViewById<View>(R.id.navigation_bottom_friend).performClick() //clickItem
     }
 
-    fun switchTo(activity: AppCompatActivity, fragment : Fragment, bundle: Bundle? = null, broken: Boolean = false){
-        val fm = activity.supportFragmentManager
-        if(broken || fm.findFragmentByTag(fragment.javaClass.simpleName)==null){
-            if(broken && fm.backStackEntryCount>0)
-                fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+    fun showNavigationBottom(open: Boolean) {
+        navigation_bottom.visibility = if (open) View.VISIBLE else View.GONE
+    }
 
-            Log.e("switchTo", fragment.javaClass.simpleName)
-            fragment.arguments = bundle
+    private fun setListen() {
+        navigation_bottom.setOnNavigationItemSelectedListener {
+            val fm = this.supportFragmentManager
             val ft = fm.beginTransaction()
-            ft.setCustomAnimations(
-                R.anim.abc_fade_in,
-                R.anim.abc_fade_out,
-                R.anim.abc_grow_fade_in_from_bottom,
-                R.anim.abc_shrink_fade_out_from_bottom
-            )
+            val fragment = when (it.itemId) {
+                R.id.navigation_bottom_friend -> ArticleTabFragment()
+                else -> ChatTabFragment()
+            }
             ft.replace(R.id.fl_fragment, fragment, fragment.javaClass.simpleName)
-            ft.addToBackStack(fragment.javaClass.simpleName)
             ft.commit()
+
+            return@setOnNavigationItemSelectedListener true
         }
     }
 
     override fun update(o: Observable?, arg: Any?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onBackPressed() {
+        Log.e("MainActivity", this.supportFragmentManager.backStackEntryCount.toString())
+        super.onBackPressed()
     }
 }

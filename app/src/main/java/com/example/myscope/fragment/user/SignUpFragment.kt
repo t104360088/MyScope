@@ -1,14 +1,16 @@
-package com.example.myscope.fragment
+package com.example.myscope.fragment.user
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.myscope.R
 import com.example.myscope.Response_Success
+import com.example.myscope.fragment.base.ObserverFragment
 import com.example.myscope.manager.ErrorMsg
-import com.example.myscope.manager.UserManager
+import com.example.myscope.manager.user.UserManager
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import java.util.*
 
@@ -24,6 +26,7 @@ class SignUpFragment : ObserverFragment() {
 
         setActionBar()
         setListen()
+        Log.e("SignUpFragment", "activity created")
     }
 
     private fun setActionBar() {
@@ -53,5 +56,10 @@ class SignUpFragment : ObserverFragment() {
             }
             is ErrorMsg -> Toast.makeText(mActivity, arg.msg, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.e("SignUpFragment", "destroy")
     }
 }

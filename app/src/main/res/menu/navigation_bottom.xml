@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+            android:id="@+id/navigation_bottom_friend"
+            android:icon="@drawable/ic_friend"
+            android:title="貼文"/>
+
+    <item
+            android:id="@+id/navigation_bottom_chat"
+            android:icon="@drawable/ic_chat"
+            android:title="聊天"/>
+</menu>

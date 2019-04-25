@@ -1,7 +1,8 @@
-package com.example.myscope.fragment
+package com.example.myscope.fragment.base
 
 import android.os.Bundle
-import com.example.myscope.manager.UserManager
+import com.example.myscope.fragment.base.BaseFragment
+import com.example.myscope.manager.user.UserManager
 import java.util.*
 
 abstract class ObserverFragment : BaseFragment(), Observer {
