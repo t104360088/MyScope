@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.myscope.R
 import com.example.myscope.activity.BaseActivity
+import com.google.android.material.snackbar.Snackbar
 
 abstract class BaseFragment : Fragment() {
     lateinit var mActivity: BaseActivity
@@ -87,5 +88,12 @@ abstract class BaseFragment : Fragment() {
 
     fun hideLoading(view: ProgressBar) {
         view.visibility = View.GONE
+    }
+
+    fun showSnackbar(msg: String, duration: Int = Snackbar.LENGTH_SHORT,
+                     actionName: String = "", listener: View.OnClickListener? = null) {
+        Snackbar.make(mActivity.findViewById(android.R.id.content), msg, duration)
+            .setAction(actionName, listener)
+            .show()
     }
 }

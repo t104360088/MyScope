@@ -3,7 +3,6 @@ package com.example.myscope.activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import com.example.myscope.R
 import com.example.myscope.fragment.user.LoginFragment
 import com.example.myscope.manager.user.UserManager
@@ -20,7 +19,6 @@ class EnterActivity : BaseActivity() {
 
         if (user != null && user.isEmailVerified) {
             Log.e("EnterActivity", "autoLogin")
-            Toast.makeText(this, "進入大廳", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this, MainActivity::class.java))
             this.finish()
         } else {

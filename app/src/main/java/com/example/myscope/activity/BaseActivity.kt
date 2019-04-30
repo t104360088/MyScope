@@ -9,7 +9,7 @@ import androidx.appcompat.widget.Toolbar
 import com.example.myscope.R
 import java.util.*
 
-abstract class BaseActivity : AppCompatActivity(), Observer{
+abstract class BaseActivity : AppCompatActivity(), Observer {
     // Set application language
 //    override fun attachBaseContext(newBase: Context) {
 //        val config = newBase.resources.configuration
@@ -32,18 +32,17 @@ abstract class BaseActivity : AppCompatActivity(), Observer{
             val parent = it.customView?.parent as Toolbar
             parent.setPadding(0, 0, 0, 0)
             parent.setContentInsetsAbsolute(0, 0)
-            it.customView?.findViewById<View>(R.id.btn_back)?.setOnClickListener { onBackPressed() }
         }
 
         //DataManager.instance.addObserver(this)
     }
 
-    private fun resetActionBar(){
-        supportActionBar?.customView?.findViewById<View>(R.id.btn_back)?.visibility = View.GONE
+    private fun resetActionBar() {
+        supportActionBar?.customView?.findViewById<View>(R.id.img_left)?.visibility = View.GONE
         supportActionBar?.customView?.findViewById<View>(R.id.tv_btn)?.visibility = View.GONE
-        supportActionBar?.customView?.findViewById<View>(R.id.img_btn)?.visibility = View.GONE
-        supportActionBar?.customView?.findViewById<View>(R.id.img_btn2)?.visibility = View.GONE
-        supportActionBar?.customView?.findViewById<View>(R.id.img_btn3)?.visibility = View.GONE
+        supportActionBar?.customView?.findViewById<View>(R.id.img_right)?.visibility = View.GONE
+        supportActionBar?.customView?.findViewById<View>(R.id.img_right2)?.visibility = View.GONE
+        supportActionBar?.customView?.findViewById<View>(R.id.img_right3)?.visibility = View.GONE
     }
 
     /**
@@ -57,15 +56,32 @@ abstract class BaseActivity : AppCompatActivity(), Observer{
         barTitle?.text = title
     }
 
-    fun setBack(visible: Boolean) {
-        supportActionBar?.customView?.findViewById<View>(R.id.btn_back)?.visibility = if (visible) View.VISIBLE else View.GONE
+    fun setBack(visible: Boolean = true) {
+        val btn = supportActionBar?.customView?.findViewById<ImageView>(R.id.img_left)
+        if (visible) {
+            btn?.setImageResource(R.drawable.back)
+            btn?.setOnClickListener { onBackPressed() }
+            btn?.visibility = View.VISIBLE
+        } else
+            btn?.visibility = View.GONE
+    }
+
+    fun setDrawer(visible: Boolean = true): ImageView? {
+        val btn = supportActionBar?.customView?.findViewById<ImageView>(R.id.img_left)
+        if (visible) {
+            btn?.setImageResource(R.drawable.menu)
+            btn?.visibility = View.VISIBLE
+            return btn
+        } else
+            btn?.visibility = View.GONE
+        return null
     }
 
     fun setImageButton(position: Int, resource: Int): ImageView? {
         val imageView = when (position) {
-            0 -> supportActionBar?.customView?.findViewById<ImageView>(R.id.img_btn)
-            1 -> supportActionBar?.customView?.findViewById<ImageView>(R.id.img_btn2)
-            else -> supportActionBar?.customView?.findViewById<ImageView>(R.id.img_btn3)
+            0 -> supportActionBar?.customView?.findViewById<ImageView>(R.id.img_right)
+            1 -> supportActionBar?.customView?.findViewById<ImageView>(R.id.img_right2)
+            else -> supportActionBar?.customView?.findViewById<ImageView>(R.id.img_right3)
         }
 
         if (resource != 0) {

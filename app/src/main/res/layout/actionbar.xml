@@ -16,12 +16,10 @@
             android:orientation="horizontal">
 
         <ImageView
-                android:id="@+id/btn_back"
+                android:id="@+id/img_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                app:srcCompat="@drawable/back"
-                android:visibility="visible"/>
+                android:padding="5dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -57,18 +55,18 @@
             android:orientation="horizontal">
 
         <ImageView
-                android:id="@+id/img_btn"
+                android:id="@+id/img_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
         <ImageView
-                android:id="@+id/img_btn2"
+                android:id="@+id/img_right2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"/>
 
         <ImageView
-                android:id="@+id/img_btn3"
+                android:id="@+id/img_right3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"

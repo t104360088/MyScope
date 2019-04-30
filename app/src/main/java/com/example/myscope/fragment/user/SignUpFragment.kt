@@ -31,7 +31,7 @@ class SignUpFragment : ObserverFragment() {
 
     private fun setActionBar() {
         mActivity.setTitle("註冊")
-        mActivity.setBack(true)
+        mActivity.setBack()
     }
 
     private fun setListen() {

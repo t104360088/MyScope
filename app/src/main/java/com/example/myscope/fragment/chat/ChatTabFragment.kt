@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.viewpager.widget.ViewPager
 import com.example.myscope.R
 import com.example.myscope.activity.MainActivity
 import com.example.myscope.adapter.ViewPagerAdapter
@@ -21,13 +22,7 @@ class ChatTabFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
 
         initView()
-        setActionBar()
-        (mActivity as MainActivity).showNavigationBottom(true)
-        //UserManager.instance.setUserData()
-    }
-
-    private fun setActionBar() {
-        mActivity.setTitle("聊天")
+        setActionBar(0)
     }
 
     private fun initView() {
@@ -37,8 +32,33 @@ class ChatTabFragment : BaseFragment() {
         val tabName = listOf("聊天室", "好友列表", "邀請列表")
         val tabFragment = listOf<Fragment>(chat, friend, invite)
         val adapter = ViewPagerAdapter(tabName, tabFragment, childFragmentManager)
-        viewPager.offscreenPageLimit = 3 // Control initial fragment count in cache
+
+        viewPager.offscreenPageLimit = 2 // Control initial fragment count in cache
         viewPager.adapter = adapter
         tabLayout.setupWithViewPager(viewPager)
+
+        viewPager.addOnPageChangeListener (object : ViewPager.OnPageChangeListener{
+            override fun onPageScrollStateChanged(state: Int) {}
+
+            override fun onPageScrolled(position: Int, positionOffset: Float,
+                                        positionOffsetPixels: Int) {}
+
+            override fun onPageSelected(position: Int) {
+                setActionBar(position)
+            }
+        })
+    }
+
+    private fun setActionBar(position: Int) {
+        mActivity.setTitle("聊天")
+        when (position) {
+            0 -> {
+            }
+            1 -> {
+            }
+            2 -> {
+            }
+        }
+        (mActivity as MainActivity).showNavigationDrawer()
     }
 }

@@ -30,7 +30,7 @@ class ForgetFragment : ObserverFragment() {
 
     private fun setActionBar() {
         mActivity.setTitle("忘記密碼")
-        mActivity.setBack(true)
+        mActivity.setBack()
     }
 
     private fun setListen() {
