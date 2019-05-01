@@ -5,7 +5,8 @@
              android:layout_height="wrap_content"
              android:background="@color/colorPrimary">
 
-    <LinearLayout
+    <ImageView
+            android:id="@+id/img_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center"
@@ -13,14 +14,18 @@
             android:baselineAligned="false"
             android:gravity="start"
             android:longClickable="false"
-            android:orientation="horizontal">
+            android:padding="5dp"/>
 
-        <ImageView
-                android:id="@+id/img_left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"/>
-    </LinearLayout>
+    <ImageView
+            android:id="@+id/img_left2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center"
+            android:layout_margin="5dp"
+            android:baselineAligned="false"
+            android:gravity="start"
+            android:longClickable="false"
+            android:padding="5dp"/>
 
     <LinearLayout
             android:layout_width="wrap_content"

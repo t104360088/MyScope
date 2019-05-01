@@ -3,11 +3,19 @@ package com.example.myscope.activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.example.myscope.R
+import com.example.myscope.Response_SetUser
 import com.example.myscope.fragment.article.ArticleTabFragment
 import com.example.myscope.fragment.chat.ChatTabFragment
+import com.example.myscope.fragment.user.PersonalInfoFragment
+import com.example.myscope.manager.user.User
 import com.example.myscope.manager.user.UserManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
@@ -26,6 +34,13 @@ class MainActivity : BaseActivity() {
         //findViewById<View>(R.id.navigation_bottom_friend).performClick() //clickItem
         setNavigation(0)
         showSnackbar("歡迎回來")
+        UserManager.instance.addObserver(this)
+
+        UserManager.instance.getCurrentUser()?.let {
+            Log.e("MainActivity", "setUserData")
+            val user = User(it.uid, it.email!!, System.currentTimeMillis(), true)
+            UserManager.instance.setUserData(user)
+        }
     }
 
     fun showNavigationBottom(visible: Boolean = true) {
@@ -34,6 +49,7 @@ class MainActivity : BaseActivity() {
 
     fun showNavigationDrawer(visible: Boolean = true) {
         setDrawer(visible)
+        setDrawerGesture(visible)
     }
 
     //Navigate view
@@ -84,8 +100,10 @@ class MainActivity : BaseActivity() {
                     }, 250)
                     return@setNavigationItemSelectedListener true
                 }
-                R.id.nav_gallery -> {
-
+                R.id.nav_info -> {
+                    switchTo(PersonalInfoFragment())
+                    showNavigationBottom(false)
+                    setDrawerGesture(false)
                 }
                 R.id.nav_slideshow -> {
 
@@ -112,8 +130,51 @@ class MainActivity : BaseActivity() {
             .show()
     }
 
+    //Change fragment
+    private fun switchTo(fragment : Fragment, bundle: Bundle? = null, broken: Boolean = false) {
+        val fm = this.supportFragmentManager
+        if(broken || fm.findFragmentByTag(fragment.javaClass.simpleName) == null){
+            if(broken && fm.backStackEntryCount > 0) {
+                fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                Log.e("switchTo", "清空堆疊")
+            }
+
+            Log.e("switchTo", fragment.javaClass.simpleName)
+            fragment.arguments = bundle
+            val ft = fm.beginTransaction()
+            ft.setCustomAnimations(
+                R.anim.abc_fade_in,
+                R.anim.abc_fade_out,
+                R.anim.abc_grow_fade_in_from_bottom,
+                R.anim.abc_shrink_fade_out_from_bottom
+            )
+            ft.replace(R.id.fl_fragment, fragment, fragment.javaClass.simpleName)
+            ft.addToBackStack(fragment.javaClass.simpleName) //Add stack
+            ft.commit()
+        }
+    }
+
+    //Open drawer gesture
+    private fun setDrawerGesture(open: Boolean = true) {
+        val status = if (open) DrawerLayout.LOCK_MODE_UNLOCKED
+                    else DrawerLayout.LOCK_MODE_LOCKED_CLOSED
+        drawerLayout.setDrawerLockMode(status)
+    }
+
     override fun update(o: Observable?, arg: Any?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        when (arg) {
+            Response_SetUser -> {
+                Log.e("MainActivity", "Response_SetUser")
+                UserManager.instance.getUserData()
+            }
+            is User -> {
+                Log.e("MainActivity", "getUserData")
+                val tv_name = findViewById<TextView>(R.id.tv_name)
+                val tv_email = findViewById<TextView>(R.id.tv_email)
+                tv_name.text = arg.name
+                tv_email.text = arg.email
+            }
+        }
     }
 
     override fun onBackPressed() {

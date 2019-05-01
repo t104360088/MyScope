@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.myscope.R
-import com.example.myscope.Response_Success
+import com.example.myscope.Response_SignIn
 import com.example.myscope.UserInfoSharedPreferences
 import com.example.myscope.activity.MainActivity
 import com.example.myscope.fragment.base.ObserverFragment
@@ -88,7 +88,7 @@ class LoginFragment : ObserverFragment() {
     override fun update(o: Observable?, arg: Any?) {
         hideLoading(progressBar)
         when (arg) {
-            Response_Success -> {
+            Response_SignIn -> {
                 saveAccount()
                 Toast.makeText(mActivity, "進入大廳", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(mActivity, MainActivity::class.java))

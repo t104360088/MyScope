@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.myscope.R
-import com.example.myscope.Response_Success
+import com.example.myscope.Response_SignUp
 import com.example.myscope.fragment.base.ObserverFragment
 import com.example.myscope.manager.ErrorMsg
 import com.example.myscope.manager.user.UserManager
@@ -50,7 +50,7 @@ class SignUpFragment : ObserverFragment() {
     override fun update(o: Observable?, arg: Any?) {
         hideLoading(progressBar)
         when (arg) {
-            Response_Success -> {
+            Response_SignUp -> {
                 popBack()
                 Toast.makeText(mActivity, "請至信箱收取驗證信完成註冊", Toast.LENGTH_SHORT).show()
             }

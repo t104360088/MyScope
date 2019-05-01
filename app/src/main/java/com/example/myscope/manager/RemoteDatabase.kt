@@ -1,5 +1,6 @@
 package com.example.myscope.manager
 
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 
 class RemoteDatabase {
@@ -16,5 +17,14 @@ class RemoteDatabase {
                     it.isSuccessful -> complete(null)
                 }
             }
+    }
+
+    fun getDocument(colKey: String, docKey: String, complete: (String?, DocumentSnapshot?) -> Unit) {
+        db.collection(colKey).document(docKey).get().addOnCompleteListener {
+            when {
+                it.exception != null -> complete(it.exception?.message, null)
+                it.isSuccessful -> complete(null, it.result)
+            }
+        }
     }
 }

@@ -67,5 +67,6 @@ class ChatTabFragment : BaseFragment() {
             }
         }
         (mActivity as MainActivity).showNavigationDrawer()
+        (mActivity as MainActivity).showNavigationBottom()
     }
 }

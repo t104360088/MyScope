@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.myscope.R
-import com.example.myscope.Response_Success
+import com.example.myscope.Response_SendEmail
 import com.example.myscope.fragment.base.ObserverFragment
 import com.example.myscope.manager.ErrorMsg
 import com.example.myscope.manager.user.UserManager
@@ -48,7 +48,7 @@ class ForgetFragment : ObserverFragment() {
     override fun update(o: Observable?, arg: Any?) {
         hideLoading(progressBar)
         when (arg) {
-            Response_Success -> {
+            Response_SendEmail -> {
                 popBack()
                 Toast.makeText(mActivity, "請至信箱收取信件重設密碼", Toast.LENGTH_SHORT).show()
             }

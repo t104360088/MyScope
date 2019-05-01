@@ -1,7 +1,7 @@
 package com.example.myscope.manager.user
 
 import android.util.Log
-import com.example.myscope.Response_Success
+import com.example.myscope.*
 import com.example.myscope.manager.ErrorMsg
 import com.example.myscope.manager.RemoteDatabase
 import com.google.firebase.auth.FirebaseAuth
@@ -26,7 +26,7 @@ class UserManager : Observable() {
                 if (it.isSuccessful) {
                     Log.e("UserManager", "signUp : success")
                     sendEmailVerification()
-                    notifyChanged(Response_Success)
+                    notifyChanged(Response_SignUp)
                 } else if (it.exception?.message != null) {
                     Log.e("UserManager", "signUp : fail")
                     val msg = ErrorMsg(it.exception?.message!!)
@@ -52,7 +52,7 @@ class UserManager : Observable() {
                     }
                     it.isSuccessful -> {
                         Log.e("UserManager", "signIn : success")
-                        notifyChanged(Response_Success)
+                        notifyChanged(Response_SignIn)
                     }
                 }
             }
@@ -75,7 +75,7 @@ class UserManager : Observable() {
                 if (it.isSuccessful) {
                     Log.e("UserManager", "sendResetEmail : success")
                     sendEmailVerification()
-                    notifyChanged(Response_Success)
+                    notifyChanged(Response_SendEmail)
                 } else if (it.exception?.message != null) {
                     Log.e("UserManager", "sendResetEmail : fail")
                     val msg = ErrorMsg(it.exception?.message!!)
@@ -89,17 +89,33 @@ class UserManager : Observable() {
         getCurrentUser()?.run {
             RemoteDatabase.instance.setDocument("User", this.uid, user) {
                 when (it) {
-                    null -> notifyChanged(Response_Success)
+                    null -> notifyChanged(Response_SetUser)
                     else -> notifyChanged(ErrorMsg(it))
                 }
             }
             return@run
+        } ?: run {
+            val msg = ErrorMsg("無法獲取此帳號資料，請重新登入")
+            notifyChanged(msg)
         }
-        val msg = ErrorMsg("無法獲取此帳號資料，請重新登入")
-        notifyChanged(msg)
     }
 
-    private fun notifyChanged(res: Any){
+    fun getUserData() {
+        getCurrentUser()?.run {
+            RemoteDatabase.instance.getDocument("User", this.uid) { msg, data ->
+                if (!msg.isNullOrEmpty())
+                    notifyChanged(ErrorMsg(msg))
+                else
+                    notifyChanged(data?.toObject(User::class.java))
+            }
+            return@run
+        } ?: run {
+            val msg = ErrorMsg("無法獲取此帳號資料，請重新登入")
+            notifyChanged(msg)
+        }
+    }
+
+    private fun notifyChanged(res: Any?){
         setChanged()
         notifyObservers(res)
     }

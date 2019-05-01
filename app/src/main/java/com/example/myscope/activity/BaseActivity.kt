@@ -39,6 +39,7 @@ abstract class BaseActivity : AppCompatActivity(), Observer {
 
     private fun resetActionBar() {
         supportActionBar?.customView?.findViewById<View>(R.id.img_left)?.visibility = View.GONE
+        supportActionBar?.customView?.findViewById<View>(R.id.img_left2)?.visibility = View.GONE
         supportActionBar?.customView?.findViewById<View>(R.id.tv_btn)?.visibility = View.GONE
         supportActionBar?.customView?.findViewById<View>(R.id.img_right)?.visibility = View.GONE
         supportActionBar?.customView?.findViewById<View>(R.id.img_right2)?.visibility = View.GONE
@@ -67,7 +68,7 @@ abstract class BaseActivity : AppCompatActivity(), Observer {
     }
 
     fun setDrawer(visible: Boolean = true): ImageView? {
-        val btn = supportActionBar?.customView?.findViewById<ImageView>(R.id.img_left)
+        val btn = supportActionBar?.customView?.findViewById<ImageView>(R.id.img_left2)
         if (visible) {
             btn?.setImageResource(R.drawable.menu)
             btn?.visibility = View.VISIBLE
