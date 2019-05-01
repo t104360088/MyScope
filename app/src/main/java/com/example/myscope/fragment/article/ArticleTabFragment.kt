@@ -24,6 +24,7 @@ class ArticleTabFragment : ObserverFragment() {
         setActionBar()
         setListen()
         //UserManager.instance.setUserData()
+        //setPage(1, 2)
     }
 
     private fun setActionBar() {

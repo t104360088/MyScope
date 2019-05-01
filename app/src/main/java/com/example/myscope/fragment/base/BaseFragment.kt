@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.myscope.R
 import com.example.myscope.activity.BaseActivity
+import com.example.myscope.activity.MainActivity
+import com.example.myscope.fragment.chat.ChatTabFragment
 import com.google.android.material.snackbar.Snackbar
 
 abstract class BaseFragment : Fragment() {
@@ -21,6 +23,7 @@ abstract class BaseFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
+    //Change fragment
     fun switchTo(fragment : Fragment, bundle: Bundle? = null, broken: Boolean = false) {
         val fm = mActivity.supportFragmentManager
         if(broken || fm.findFragmentByTag(fragment.javaClass.simpleName) == null){
@@ -41,6 +44,21 @@ abstract class BaseFragment : Fragment() {
             ft.replace(R.id.fl_fragment, fragment, fragment.javaClass.simpleName)
             ft.addToBackStack(fragment.javaClass.simpleName) //Add stack
             ft.commit()
+        }
+    }
+
+    //Change page
+    fun setPage(navPosition: Int, pagePosition: Int) {
+
+        (mActivity as? MainActivity)?.let {
+            //會讓tabfragment初始化兩次，這問題待解決，不應該執行navigation，而是高亮度
+            it.setNavigation(navPosition)
+
+            val b = Bundle()
+            b.putInt("Page", pagePosition)
+            when (navPosition) {
+                1 -> switchTo(ChatTabFragment(), b)
+            }
         }
     }
 

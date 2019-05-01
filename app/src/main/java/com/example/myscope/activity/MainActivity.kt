@@ -23,7 +23,8 @@ class MainActivity : BaseActivity() {
         setListen()
         showNavigationBottom()
         showNavigationDrawer()
-        findViewById<View>(R.id.navigation_bottom_friend).performClick() //clickItem
+        //findViewById<View>(R.id.navigation_bottom_friend).performClick() //clickItem
+        setNavigation(0)
         showSnackbar("歡迎回來")
     }
 
@@ -33,6 +34,16 @@ class MainActivity : BaseActivity() {
 
     fun showNavigationDrawer(visible: Boolean = true) {
         setDrawer(visible)
+    }
+
+    //Navigate view
+    fun setNavigation(position: Int) {
+
+        //因為找不到切換方式，menu.getItem(p).setClick 試過沒用，暫時土法煉鋼
+        when (position) {
+            0 -> findViewById<View>(R.id.navigation_bottom_article).performClick()
+            else -> findViewById<View>(R.id.navigation_bottom_chat).performClick()
+        }
     }
 
     private fun setListen() {
@@ -45,7 +56,7 @@ class MainActivity : BaseActivity() {
             val fm = this.supportFragmentManager
             val ft = fm.beginTransaction()
             val fragment = when (it.itemId) {
-                R.id.navigation_bottom_friend -> ArticleTabFragment()
+                R.id.navigation_bottom_article -> ArticleTabFragment()
                 else -> ChatTabFragment()
             }
             ft.replace(R.id.fl_fragment, fragment, fragment.javaClass.simpleName)

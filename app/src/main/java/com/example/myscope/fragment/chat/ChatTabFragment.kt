@@ -1,6 +1,7 @@
 package com.example.myscope.fragment.chat
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,12 @@ class ChatTabFragment : BaseFragment() {
 
         initView()
         setActionBar(0)
+
+        //Switch page
+        arguments?.let {
+            viewPager.currentItem = it.getInt("Page")
+        }
+        Log.e("ChatTabFragment", "onActivityCreated")
     }
 
     private fun initView() {
