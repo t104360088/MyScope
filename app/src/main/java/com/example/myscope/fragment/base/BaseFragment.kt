@@ -100,12 +100,16 @@ abstract class BaseFragment : Fragment() {
 //        imm.hideSoftInputFromWindow(view.windowToken, 0)
 //    }
 
-    fun showLoading(view: ProgressBar) {
-        view.visibility = View.VISIBLE
+    fun showLoading(view: ProgressBar?) {
+        view?.let {
+            it.visibility = View.VISIBLE
+        }
     }
 
-    fun hideLoading(view: ProgressBar) {
-        view.visibility = View.GONE
+    fun hideLoading(view: ProgressBar?) {
+        view?.let {
+            it.visibility = View.GONE
+        }
     }
 
     fun showSnackbar(msg: String, duration: Int = Snackbar.LENGTH_SHORT,

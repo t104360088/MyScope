@@ -9,7 +9,7 @@ import androidx.appcompat.widget.Toolbar
 import com.example.myscope.R
 import java.util.*
 
-abstract class BaseActivity : AppCompatActivity(), Observer {
+abstract class BaseActivity : AppCompatActivity() {
     // Set application language
 //    override fun attachBaseContext(newBase: Context) {
 //        val config = newBase.resources.configuration

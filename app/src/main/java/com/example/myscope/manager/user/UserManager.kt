@@ -14,10 +14,15 @@ class UserManager : Observable() {
     companion object {
         val instance: UserManager by lazy { UserManager() }
         private val mAuth by lazy { FirebaseAuth.getInstance() }
+        private var mUser: User? = null
     }
 
     fun getCurrentUser(): FirebaseUser? {
         return FirebaseAuth.getInstance().currentUser
+    }
+
+    fun getMyUser(): User? {
+        return mUser
     }
 
     fun signUp(email: String, pwd: String) {
@@ -63,6 +68,7 @@ class UserManager : Observable() {
         Log.e("UserManager", "signOut")
         Log.e("UserManager", "userEmail:${getCurrentUser()?.email}")
         mAuth.signOut()
+        mUser = null
     }
 
     fun sendEmailVerification() {
@@ -88,6 +94,7 @@ class UserManager : Observable() {
     fun setUserData(user: User) {
         getCurrentUser()?.run {
             RemoteDatabase.instance.setDocument("User", this.uid, user) {
+                Log.e("UserManager", "setUserData")
                 when (it) {
                     null -> notifyChanged(Response_SetUser)
                     else -> notifyChanged(ErrorMsg(it))
@@ -105,8 +112,13 @@ class UserManager : Observable() {
             RemoteDatabase.instance.getDocument("User", this.uid) { msg, data ->
                 if (!msg.isNullOrEmpty())
                     notifyChanged(ErrorMsg(msg))
-                else
-                    notifyChanged(data?.toObject(User::class.java))
+                else {
+                    data?.toObject(User::class.java)?.let {
+                        mUser = it
+                        notifyChanged(it)
+                        Log.e("UserManager", "getUserData")
+                    }
+                }
             }
             return@run
         } ?: run {
