@@ -12,6 +12,8 @@ class UserInfoSharedPreferences(context: Context) {
         private const val Photo = "Photo"
         private const val Email = "Email"
         private const val Password = "Password"
+        private const val Avatar = "Avatar"
+        private const val Background = "Background"
         private const val LoginType = "LoginType"
         private const val Language = "Language"
     }
@@ -20,6 +22,11 @@ class UserInfoSharedPreferences(context: Context) {
         context.getSharedPreferences("MyScope", Context.MODE_PRIVATE)
 
     fun clear() = sp.edit().clear().apply()
+
+    fun clearLoginData() {
+        sp.edit().remove(Email).apply()
+        sp.edit().remove(Password).apply()
+    }
 
     fun setUserID(id: String) = sp.edit().putString(UserID, id).apply()
 
@@ -32,6 +39,10 @@ class UserInfoSharedPreferences(context: Context) {
     fun setEmail(email: String) = sp.edit().putString(Email, email).apply()
 
     fun setPassword(pwd: String) = sp.edit().putString(Password, pwd).apply()
+
+    fun setAvatar(url: String) = sp.edit().putString(Avatar, url).apply()
+
+    fun setBackground(url: String) = sp.edit().putString(Background, url).apply()
 
     fun setLoginType(type: Int) = sp.edit().putInt(LoginType, type).apply()
 
@@ -48,6 +59,10 @@ class UserInfoSharedPreferences(context: Context) {
     fun getEmail(): String = sp.getString(Email,"")
 
     fun getPassword(): String = sp.getString(Password, "")
+
+    fun getAvatar(): String = sp.getString(Avatar, "")
+
+    fun getBackground(): String = sp.getString(Background, "")
 
     fun getLoginType(): Int = sp.getInt(LoginType,2)
 

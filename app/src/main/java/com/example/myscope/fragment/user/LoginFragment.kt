@@ -80,7 +80,7 @@ class LoginFragment : ObserverFragment() {
             sp.setEmail(ed_email.text.toString())
             sp.setPassword(ed_pwd.text.toString())
         } else {
-            sp.clear() //思考是不是該做一個單獨刪除帳號和密碼的方法
+            sp.clearLoginData()
         }
     }
 

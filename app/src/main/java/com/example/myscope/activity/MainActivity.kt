@@ -11,10 +11,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.example.myscope.ImageLoader
-import com.example.myscope.ImageType
-import com.example.myscope.R
-import com.example.myscope.Response_SetUser
+import com.example.myscope.*
 import com.example.myscope.fragment.article.ArticleTabFragment
 import com.example.myscope.fragment.chat.ChatTabFragment
 import com.example.myscope.fragment.user.PersonalInfoFragment
@@ -29,6 +26,7 @@ import java.util.*
 
 class MainActivity : ObserverActivity() {
     private var isFirstOnline = true
+    private var canUpdated = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -126,8 +124,17 @@ class MainActivity : ObserverActivity() {
         //Listen drawer status
         drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
             override fun onDrawerOpened(drawerView: View) {
-                Log.e("MainActivity", "Open Drawer")
-                UserManager.instance.getUserData()
+                //Update drawer's header
+                Log.e("MainActivity", "setDrawerHeader")
+                val name = header_drawer.findViewById<TextView>(R.id.tv_name)
+                val email = header_drawer.findViewById<TextView>(R.id.tv_email)
+                val avatar = header_drawer.findViewById<ImageView>(R.id.img_avatar)
+                val bg = header_drawer.findViewById<ImageView>(R.id.img_bg)
+                val sp = UserInfoSharedPreferences(this@MainActivity)
+                name.text = sp.getName()
+                email.text = sp.getEmail()
+                ImageLoader.loadImage(avatar, sp.getAvatar())
+                ImageLoader.loadImage(bg, sp.getBackground(), ImageType.Background)
             }
 
             override fun onDrawerClosed(drawerView: View) {}
@@ -179,33 +186,39 @@ class MainActivity : ObserverActivity() {
     override fun update(o: Observable?, arg: Any?) {
         when (arg) {
             Response_SetUser -> {
-                Log.e("MainActivity", "Response_SetUser")
+                if (canUpdated) {
+                    canUpdated = false
+                    Log.e("MainActivity", "Response_SetUser")
+                }
             }
             is User -> {
                 runOnUiThread {
-                    //Update drawer's header
-                    Log.e("MainActivity", "setDrawerHeader")
-                    val name = header_drawer.findViewById<TextView>(R.id.tv_name)
-                    val email = header_drawer.findViewById<TextView>(R.id.tv_email)
-                    val avatar = header_drawer.findViewById<ImageView>(R.id.img_avatar)
-                    val bg = header_drawer.findViewById<ImageView>(R.id.img_bg)
-                    name.text = arg.name
-                    email.text = arg.email
-                    ImageLoader.loadImage(avatar, arg.avatar)
-                    ImageLoader.loadImage(bg, arg.background, ImageType.Background)
+                    if (canUpdated) {
+                        canUpdated = false
 
-                    //Update user online status
-                    if (isFirstOnline) {
-                        Log.e("MainActivity", "Update user online status")
-                        isFirstOnline = false
-                        arg.onlineTime = System.currentTimeMillis()
-                        UserManager.instance.setUserData(arg)
+                        //Save to Local Database
+                        val sp = UserInfoSharedPreferences(this)
+                        arg.name?.let { sp.setName(it) }
+                        arg.email.let { sp.setEmail(it) }
+                        arg.avatar?.let { sp.setAvatar(it) }
+                        arg.background?.let { sp.setBackground(it) }
+
+                        //Update user online status
+                        if (isFirstOnline) {
+                            Log.e("MainActivity", "Update user online status")
+                            isFirstOnline = false
+                            arg.onlineTime = System.currentTimeMillis()
+                            UserManager.instance.setUserData(arg)
+                        }
                     }
                 }
             }
             is ErrorMsg -> {
                 runOnUiThread {
-                    showSnackbar(arg.msg)
+                    if (canUpdated) {
+                        canUpdated = false
+                        showSnackbar(arg.msg)
+                    }
                 }
             }
         }

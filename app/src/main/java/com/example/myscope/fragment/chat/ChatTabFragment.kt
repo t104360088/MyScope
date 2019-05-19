@@ -58,15 +58,21 @@ class ChatTabFragment : BaseFragment() {
 
     private fun setActionBar(position: Int) {
         mActivity.setTitle("聊天")
+        (mActivity as MainActivity).showNavigationDrawer()
+        (mActivity as MainActivity).showNavigationBottom()
+
         when (position) {
             0 -> {
             }
             1 -> {
             }
             2 -> {
+                mActivity.setImageButton(2, R.drawable.ic_search)?.setOnClickListener {
+                    switchTo(AddFriendFragment())
+                    (mActivity as MainActivity).showNavigationDrawer(false)
+                    (mActivity as MainActivity).showNavigationBottom(false)
+                }
             }
         }
-        (mActivity as MainActivity).showNavigationDrawer()
-        (mActivity as MainActivity).showNavigationBottom()
     }
 }

@@ -115,6 +115,7 @@ class PersonalInfoFragment : ObserverFragment() {
                 user.name = name
                 showLoading(progressBar)
                 UserManager.instance.setUserData(user)
+                saveLocalData(user)
             } else
                 showSnackbar("資料請填寫完整")
         }
@@ -157,6 +158,14 @@ class PersonalInfoFragment : ObserverFragment() {
         btn_save.visibility = if (editable) View.VISIBLE else View.GONE
     }
 
+    private fun saveLocalData(user: User) {
+        val sp = UserInfoSharedPreferences(mActivity)
+        user.name?.let { sp.setName(it) }
+        user.email.let { sp.setEmail(it) }
+        user.avatar?.let { sp.setAvatar(it) }
+        user.background?.let { sp.setBackground(it) }
+    }
+
     override fun update(o: Observable?, arg: Any?) {
         when (arg) {
             is User -> {
@@ -167,6 +176,7 @@ class PersonalInfoFragment : ObserverFragment() {
                     ed_email.setText(arg.email)
                     ImageLoader.loadImage(img_avatar, arg.avatar)
                     ImageLoader.loadImage(img_bg, arg.background, ImageType.Background)
+                    saveLocalData(arg)
                 }
             }
             is ErrorMsg -> {

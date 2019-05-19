@@ -37,9 +37,9 @@ dependencies {
     implementation 'androidx.viewpager:viewpager:1.0.0'
 
     //Firebase
-    implementation 'com.google.firebase:firebase-auth:16.2.1'
-    implementation 'com.google.firebase:firebase-firestore:18.2.0'
-    implementation 'com.google.firebase:firebase-storage:16.1.0'
+    implementation 'com.google.firebase:firebase-auth:17.0.0'
+    implementation 'com.google.firebase:firebase-firestore:19.0.0'
+    implementation 'com.google.firebase:firebase-storage:17.0.0'
 
     //Image processor
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'

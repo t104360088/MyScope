@@ -30,6 +30,12 @@ class UserManager : Observable() {
             if (it.isComplete) {
                 if (it.isSuccessful) {
                     Log.e("UserManager", "signUp : success")
+                    //New user data
+                    it.result?.user?.run {
+                        val index = Regex("""@""").find(this.email ?: "")?.range?.start
+                        val name = this.email?.substring(0, index ?: 0)
+                        setUserData(User(this.uid, this.email ?: "", name = name))
+                    }
                     sendEmailVerification()
                     notifyChanged(Response_SignUp)
                 } else if (it.exception?.message != null) {
@@ -124,6 +130,40 @@ class UserManager : Observable() {
         } ?: run {
             val msg = ErrorMsg("無法獲取此帳號資料，請重新登入")
             notifyChanged(msg)
+        }
+    }
+
+    //Get others
+    fun getUserData(uid: String) {
+        RemoteDatabase.instance.getDocument("User", uid) { msg, data ->
+            if (!msg.isNullOrEmpty())
+                notifyChanged(ErrorMsg(msg))
+            else {
+                data?.toObject(User::class.java)?.let {
+                    notifyChanged(it)
+                    Log.e("UserManager", "getUserData")
+                } ?: run {
+                    notifyChanged(ErrorMsg("查無此人"))
+                    Log.e("UserManager", "noUserData")
+                }
+            }
+        }
+    }
+
+    fun queryUserData(email: String) {
+        RemoteDatabase.instance.queryDocument("User", "email", email) {
+                msg, data ->
+            if (!msg.isNullOrEmpty())
+                notifyChanged(ErrorMsg(msg))
+            else {
+                if (data?.size != 0) {
+                    data!![0].toObject(User::class.java)?.let {
+                        notifyChanged(it)
+                        Log.e("FriendManager", "getFriendData")
+                    }
+                } else
+                    notifyChanged(ErrorMsg("查無此人"))
+            }
         }
     }
 
