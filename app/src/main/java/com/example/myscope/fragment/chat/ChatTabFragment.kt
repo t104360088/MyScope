@@ -67,7 +67,7 @@ class ChatTabFragment : BaseFragment() {
             1 -> {
             }
             2 -> {
-                mActivity.setImageButton(2, R.drawable.ic_search)?.setOnClickListener {
+                mActivity.setImageButton(2, R.drawable.ic_add_friend)?.setOnClickListener {
                     switchTo(AddFriendFragment())
                     (mActivity as MainActivity).showNavigationDrawer(false)
                     (mActivity as MainActivity).showNavigationBottom(false)
