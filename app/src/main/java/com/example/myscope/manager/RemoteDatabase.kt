@@ -10,6 +10,13 @@ class RemoteDatabase {
         private val db by lazy { FirebaseFirestore.getInstance() }
     }
 
+    fun getAutoID(colKey: String, docKey: String? = null, colKey2: String? = null): String {
+        return if (docKey != null && colKey2 != null)
+            db.collection(colKey).document(docKey).collection(colKey2).document().id
+        else
+            db.collection(colKey).document().id
+    }
+
     //One layer
     fun setDocument(colKey: String, docKey: String, data: Any, complete: (String?) -> Unit) {
         db.collection(colKey).document(docKey).set(data).addOnCompleteListener {
@@ -73,6 +80,17 @@ class RemoteDatabase {
         }
     }
 
+    //One layer
+    fun deleteDocument(colKey: String, docKey: String, complete: (String?) -> Unit) {
+        db.collection(colKey).document(docKey).delete().addOnCompleteListener {
+            when {
+                it.exception != null -> complete(it.exception?.message)
+                it.isSuccessful -> complete(null)
+            }
+        }
+    }
+
+    //Two layers
     fun deleteDocument(colKey: String, docKey: String, colKey2: String, docKey2: String, complete: (String?) -> Unit) {
         db.collection(colKey).document(docKey).collection(colKey2).document(docKey2).delete().addOnCompleteListener {
             when {

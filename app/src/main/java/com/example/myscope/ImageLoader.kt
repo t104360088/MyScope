@@ -32,5 +32,6 @@ object ImageLoader {
 
 enum class ImageType {
     Avatar,
-    Background
+    Background,
+    Article
 }

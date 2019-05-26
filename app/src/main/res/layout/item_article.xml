@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_avatar"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/avatar"
+                android:elevation="2dp"
+                app:layout_constraintTop_toTopOf="@+id/tv_name"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_time"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintDimensionRatio="1:1"
+                android:layout_marginStart="8dp"/>
+
+        <TextView
+                android:text="Name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_name"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_medium"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/img_more"
+                app:layout_constraintStart_toEndOf="@+id/img_avatar"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"/>
+
+        <TextView
+                android:text="0000/00/00 00:00"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_time"
+                android:textSize="@dimen/text_small"
+                app:layout_constraintTop_toBottomOf="@+id/tv_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_name"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"/>
+
+        <ImageView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:srcCompat="@drawable/more"
+                android:id="@+id/img_more"
+                app:layout_constraintDimensionRatio="h,1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:rotation="90"
+                app:layout_constraintWidth_percent=".05"
+                app:layout_constraintTop_toTopOf="@+id/tv_name"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_name"
+                android:layout_marginEnd="8dp"/>
+
+        <TextView
+                android:text="Content"
+                android:maxLines="5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_content"
+                android:textSize="@dimen/text_medium"
+                app:layout_constraintTop_toBottomOf="@+id/img_avatar"
+                app:layout_constraintEnd_toEndOf="@+id/tv_time"
+                app:layout_constraintStart_toStartOf="@+id/img_avatar"
+                android:layout_marginTop="8dp" android:textColor="@android:color/black"/>
+
+        <TextView
+                android:text="標記5位朋友"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_tag"
+                android:textSize="@dimen/text_medium"
+                android:maxLines="1"
+                android:ellipsize="end"
+                app:layout_constraintStart_toStartOf="@+id/img_avatar"
+                android:textColor="@color/colorPrimaryDark"
+                app:layout_constraintTop_toBottomOf="@+id/tv_content"/>
+
+        <ImageView
+                android:layout_width="0dp"
+                android:layout_height="0dp" app:srcCompat="@android:drawable/ic_menu_gallery"
+                android:id="@+id/img_photo"
+                app:layout_constraintStart_toStartOf="@+id/img_avatar"
+                app:layout_constraintEnd_toEndOf="@+id/tv_time" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_tag" app:layout_constraintDimensionRatio="1:1"/>
+
+        <TextView
+                android:text="喜歡"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_like" app:layout_constraintStart_toStartOf="@+id/img_photo"
+                android:layout_marginTop="8dp"
+                android:textSize="@dimen/text_small"
+                app:layout_constraintTop_toBottomOf="@+id/img_photo"/>
+
+        <TextView
+                android:text="留言"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_comment"
+                android:textSize="@dimen/text_small"
+                app:layout_constraintTop_toTopOf="@+id/tv_like"
+                app:layout_constraintStart_toEndOf="@+id/tv_like"
+                android:layout_marginStart="32dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

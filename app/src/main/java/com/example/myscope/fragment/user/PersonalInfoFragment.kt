@@ -121,7 +121,7 @@ class PersonalInfoFragment : ObserverFragment() {
         }
     }
 
-    //Uplaod to Firebase Storage
+    //Upload to Firebase Storage
     private fun uploadImage(isAvatar: Boolean, uri: String) {
         val type = if (isAvatar) StorageType.Avatar else StorageType.Background
         val name = if (isAvatar) "avatar" else "background"

@@ -8,11 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.myscope.R
+import com.example.myscope.Response_SetUser
 import com.example.myscope.Response_SignIn
 import com.example.myscope.UserInfoSharedPreferences
 import com.example.myscope.activity.MainActivity
 import com.example.myscope.fragment.base.ObserverFragment
 import com.example.myscope.manager.ErrorMsg
+import com.example.myscope.manager.user.User
 import com.example.myscope.manager.user.UserManager
 import kotlinx.android.synthetic.main.fragment_login.*
 import java.util.*
@@ -86,17 +88,40 @@ class LoginFragment : ObserverFragment() {
 
     //Mark:ResponseHandler
     override fun update(o: Observable?, arg: Any?) {
-        hideLoading(progressBar)
         when (arg) {
             Response_SignIn -> {
                 saveAccount()
-                Toast.makeText(mActivity, "進入大廳", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(mActivity, MainActivity::class.java))
-                mActivity.finish()
+                UserManager.instance.getUserData()
+            }
+            Response_SetUser -> {
+                mActivity.runOnUiThread {
+                    hideLoading(progressBar)
+                    Log.e("LoginFragment", "Response_SetUser")
+                    startActivity(Intent(mActivity, MainActivity::class.java))
+                    mActivity.finish()
+                }
+            }
+            is User -> {
+                mActivity.runOnUiThread {
+                    //Save to Local Database
+                    val sp = UserInfoSharedPreferences(mActivity)
+                    arg.name?.let { sp.setName(it) }
+                    arg.email.let { sp.setEmail(it) }
+                    arg.avatar?.let { sp.setAvatar(it) }
+                    arg.background?.let { sp.setBackground(it) }
+
+                    //Update user online status
+                    Log.e("LoginFragment", "Update user online status")
+                    arg.onlineTime = System.currentTimeMillis()
+                    UserManager.instance.setUserData(arg)
+                }
             }
             is ErrorMsg -> {
-                enableEditText(true)
-                Toast.makeText(mActivity, arg.msg, Toast.LENGTH_SHORT).show()
+                mActivity.runOnUiThread {
+                    hideLoading(progressBar)
+                    enableEditText(true)
+                    Toast.makeText(mActivity, arg.msg, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

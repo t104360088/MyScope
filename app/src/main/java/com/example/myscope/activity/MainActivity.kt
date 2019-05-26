@@ -39,7 +39,8 @@ class MainActivity : ObserverActivity() {
         //findViewById<View>(R.id.navigation_bottom_friend).performClick() //clickItem
         setNavigation(0)
         showSnackbar("歡迎回來")
-        UserManager.instance.getUserData()
+        //研究登入流程是否要再修改
+        //UserManager.instance.getUserData()
     }
 
     fun showNavigationBottom(visible: Boolean = true) {
@@ -160,7 +161,7 @@ class MainActivity : ObserverActivity() {
     }
 
     //Change fragment
-    private fun switchTo(fragment : Fragment, bundle: Bundle? = null, broken: Boolean = false) {
+    fun switchTo(fragment : Fragment, bundle: Bundle? = null, broken: Boolean = false) {
         val fm = this.supportFragmentManager
         if(broken || fm.findFragmentByTag(fragment.javaClass.simpleName) == null){
             if(broken && fm.backStackEntryCount > 0) {
@@ -185,42 +186,42 @@ class MainActivity : ObserverActivity() {
 
     override fun update(o: Observable?, arg: Any?) {
         when (arg) {
-            Response_SetUser -> {
-                if (canUpdated) {
-                    canUpdated = false
-                    Log.e("MainActivity", "Response_SetUser")
-                }
-            }
-            is User -> {
-                runOnUiThread {
-                    if (canUpdated) {
-                        canUpdated = false
-
-                        //Save to Local Database
-                        val sp = UserInfoSharedPreferences(this)
-                        arg.name?.let { sp.setName(it) }
-                        arg.email.let { sp.setEmail(it) }
-                        arg.avatar?.let { sp.setAvatar(it) }
-                        arg.background?.let { sp.setBackground(it) }
-
-                        //Update user online status
-                        if (isFirstOnline) {
-                            Log.e("MainActivity", "Update user online status")
-                            isFirstOnline = false
-                            arg.onlineTime = System.currentTimeMillis()
-                            UserManager.instance.setUserData(arg)
-                        }
-                    }
-                }
-            }
-            is ErrorMsg -> {
-                runOnUiThread {
-                    if (canUpdated) {
-                        canUpdated = false
-                        showSnackbar(arg.msg)
-                    }
-                }
-            }
+//            Response_SetUser -> {
+//                if (canUpdated) {
+//                    canUpdated = false
+//                    Log.e("MainActivity", "Response_SetUser")
+//                }
+//            }
+//            is User -> {
+//                runOnUiThread {
+//                    if (canUpdated) {
+//                        canUpdated = false
+//
+//                        //Save to Local Database
+//                        val sp = UserInfoSharedPreferences(this)
+//                        arg.name?.let { sp.setName(it) }
+//                        arg.email.let { sp.setEmail(it) }
+//                        arg.avatar?.let { sp.setAvatar(it) }
+//                        arg.background?.let { sp.setBackground(it) }
+//
+//                        //Update user online status
+//                        if (isFirstOnline) {
+//                            Log.e("MainActivity", "Update user online status")
+//                            isFirstOnline = false
+//                            arg.onlineTime = System.currentTimeMillis()
+//                            UserManager.instance.setUserData(arg)
+//                        }
+//                    }
+//                }
+//            }
+//            is ErrorMsg -> {
+//                runOnUiThread {
+//                    if (canUpdated) {
+//                        canUpdated = false
+//                        showSnackbar(arg.msg)
+//                    }
+//                }
+//            }
         }
     }
 
