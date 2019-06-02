@@ -11,6 +11,7 @@ import com.example.myscope.adapter.FriendAdapter
 import com.example.myscope.fragment.base.LazyLoadFragment
 import com.example.myscope.manager.DialogManager
 import com.example.myscope.manager.ErrorMsg
+import com.example.myscope.manager.chat.ChatManager
 import com.example.myscope.manager.friend.Friend
 import com.example.myscope.manager.friend.FriendList
 import com.example.myscope.manager.friend.FriendManager
@@ -52,6 +53,7 @@ class FriendFragment : LazyLoadFragment() {
                                 setOnClickListener { v ->
                                     DialogManager.instance.dismissDialog()
                                     FriendManager.instance.deleteFriend(it.uid, friends[position].targetUID)
+                                    ChatManager.instance.deleteChatRoom(it.uid, friends[position].targetUID)
                             }
                         }
                     }

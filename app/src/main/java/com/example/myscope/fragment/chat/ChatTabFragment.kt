@@ -33,11 +33,11 @@ class ChatTabFragment : BaseFragment() {
     }
 
     private fun initView() {
-        val chat = ChatFragment()
+        val chatRoom = ChatRoomFragment()
         val friend = FriendFragment()
         val invite = InviteFragment()
         val tabName = listOf("聊天室", "好友列表", "邀請列表")
-        val tabFragment = listOf<Fragment>(chat, friend, invite)
+        val tabFragment = listOf<Fragment>(chatRoom, friend, invite)
         val adapter = ViewPagerAdapter(tabName, tabFragment, childFragmentManager)
 
         viewPager.offscreenPageLimit = 2 // Control initial fragment count in cache
