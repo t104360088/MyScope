@@ -1,7 +1,6 @@
 package com.example.myscope.manager
 
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.*
 
 class RemoteDatabase {
 
@@ -78,6 +77,22 @@ class RemoteDatabase {
                 it.isSuccessful -> complete(null, it.result?.documents)
             }
         }
+    }
+
+    fun getRealtimeDocumentList(colKey: String, docKey: String, colKey2: String, orderBy: String, complete: (String?, List<DocumentSnapshot>?) -> Unit): ListenerRegistration {
+        val docRef = db.collection(colKey).document(docKey).collection(colKey2).orderBy(orderBy)
+        return docRef.addSnapshotListener(EventListener<QuerySnapshot> { snapshot, e ->
+            if (e != null) {
+                complete(e.message, null)
+                return@EventListener
+            }
+
+            if (snapshot != null && !snapshot.isEmpty) {
+                complete(null, snapshot.documents)
+            } else {
+                //complete("Current data: null", null)
+            }
+        })
     }
 
     //One layer

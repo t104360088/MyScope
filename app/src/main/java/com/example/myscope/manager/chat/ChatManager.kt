@@ -2,12 +2,15 @@ package com.example.myscope.manager.chat
 
 import android.util.Log
 import com.example.myscope.Response_DeleteChatRoom
+import com.example.myscope.Response_SetChatRoom
 import com.example.myscope.Response_SetMessage
 import com.example.myscope.manager.ErrorMsg
 import com.example.myscope.manager.RemoteDatabase
+import com.google.firebase.firestore.ListenerRegistration
 import java.util.*
 
 class ChatManager : Observable() {
+    private lateinit var chatListener: ListenerRegistration
 
     //Singleton
     companion object {
@@ -30,7 +33,7 @@ class ChatManager : Observable() {
     }
 
     fun getChatList(roomID: String) {
-        RemoteDatabase.instance.getDocumentList("Chat", roomID, "Message", 10) {
+        chatListener = RemoteDatabase.instance.getRealtimeDocumentList("Chat", roomID, "Message", "time") {
                 msg, list ->
             if (msg != null) {
                 notifyChanged(ErrorMsg(msg))
@@ -41,6 +44,21 @@ class ChatManager : Observable() {
                 }
                 notifyChanged(ChatList(mList.toTypedArray()))
                 Log.e("ChatManager", "getChatList")
+            }
+        }
+    }
+
+    fun removeChatListen() {
+        chatListener.remove()
+    }
+
+    fun setChatRoomData(uid: String, chatRoom: ChatRoom) {
+        RemoteDatabase.instance.setDocument("ChatRoom", uid,
+            "Setting", chatRoom.targetUID, chatRoom) {
+            Log.e("ChatManager", "setChatRoomData")
+            when (it) {
+                null -> notifyChanged(Response_SetChatRoom)
+                else -> notifyChanged(ErrorMsg(it))
             }
         }
     }

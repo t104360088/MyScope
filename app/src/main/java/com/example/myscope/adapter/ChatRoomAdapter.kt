@@ -43,8 +43,11 @@ class ChatRoomAdapter(context: Context, room: ArrayList<ChatRoom>) :
         holder.tv_last_msg.text = item.lastMsg
 
         c.timeInMillis = item.lastTime
-        holder.tv_time.text = String.format("%d/%02d/%02d", c.get(Calendar.YEAR),
-            c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH))
+
+        //等待改善
+        holder.tv_time.text = String.format("%d/%02d/%02d-%02d:%02d", c.get(Calendar.YEAR),
+            c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.HOUR_OF_DAY),
+            c.get(Calendar.MINUTE))
 
         return view
     }

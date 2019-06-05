@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.myscope.R
+import com.example.myscope.activity.MainActivity
 import com.example.myscope.adapter.ChatRoomAdapter
 import com.example.myscope.fragment.base.LazyLoadFragment
 import com.example.myscope.manager.ErrorMsg
@@ -39,23 +40,13 @@ class ChatRoomFragment : LazyLoadFragment() {
             }
 
             listView.adapter = adapter
-//            listView.setOnItemLongClickListener { parent, view, position, id ->
-//                val option = arrayOf("刪除好友")
-//                DialogManager.instance.showList(mActivity, option)?.setOnItemClickListener { _, _, p, _ ->
-//                    DialogManager.instance.dismissDialog()
-//                    when (p) {
-//                        0 -> {
-//                            val msg = "確定要刪除此好友嗎?"
-//                            DialogManager.instance.showMessage(mActivity, msg, true)?.
-//                                setOnClickListener { v ->
-//                                    DialogManager.instance.dismissDialog()
-//                                    FriendManager.instance.deleteFriend(it.uid, friends[position].targetUID)
-//                                }
-//                        }
-//                    }
-//                }
-//                return@setOnItemLongClickListener true
-//            }
+            listView.setOnItemClickListener { parent, view, position, id ->
+                val b = Bundle()
+                b.putSerializable("Room", room[position])
+                switchTo(ChatFragment(), b)
+                (mActivity as MainActivity).showNavigationDrawer(false)
+                (mActivity as MainActivity).showNavigationBottom(false)
+            }
         }
     }
 
