@@ -1,6 +1,7 @@
 package com.example.myscope.activity
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -115,7 +116,12 @@ class MainActivity : ObserverActivity() {
 
                 }
                 R.id.nav_send -> {
-
+                    val sp = UserInfoSharedPreferences(this@MainActivity)
+                    val intent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",
+                        "t104360088@ntut.org.tw",null))
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "${sp.getName()} 對 MyScope 的建議與回饋")
+                    intent.putExtra(Intent.EXTRA_TEXT, "寫下你的想法")
+                    startActivity(Intent.createChooser(intent,"Send email..."))
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
