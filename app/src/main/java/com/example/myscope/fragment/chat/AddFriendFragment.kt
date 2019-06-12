@@ -107,19 +107,19 @@ class AddFriendFragment : ObserverFragment() {
                     when (arg.status) {
                         0 -> {
                             btn_add.text = "加好友"
-                            btn_add.isEnabled = true
+                            setButtonStatus(true)
                         }
                         1 -> {
                             btn_add.text = "已送出邀請"
-                            btn_add.isEnabled = false
+                            setButtonStatus(false)
                         }
                         2 -> {
                             btn_add.text = "對方已發送邀請"
-                            btn_add.isEnabled = false
+                            setButtonStatus(false)
                         }
                         3 -> {
                             btn_add.text = "已成為好友"
-                            btn_add.isEnabled = false
+                            setButtonStatus(false)
                         }
                     }
                 }
@@ -135,9 +135,21 @@ class AddFriendFragment : ObserverFragment() {
                 mActivity.runOnUiThread {
                     hideLoading(progressBar)
                     btn_add.text = "已送出邀請"
-                    btn_add.isEnabled = false
+                    setButtonStatus(false)
                 }
             }
+        }
+    }
+
+    private fun setButtonStatus(isEnabled: Boolean) {
+        btn_add.isEnabled = isEnabled
+
+        if (isEnabled) {
+            btn_add.setTextColor(resources.getColor(android.R.color.white))
+            btn_add.background = resources.getDrawable(R.drawable.btn_primary)
+        } else {
+            btn_add.setTextColor(resources.getColor(R.color.colorPrimaryDark))
+            btn_add.background = resources.getDrawable(R.drawable.btn_secondary)
         }
     }
 }

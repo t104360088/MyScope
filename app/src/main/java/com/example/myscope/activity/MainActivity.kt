@@ -113,7 +113,11 @@ class MainActivity : ObserverActivity() {
 
                 }
                 R.id.nav_share -> {
-
+                    val i = Intent(Intent.ACTION_SEND)
+                    i.type = "text/plain"
+                    i.putExtra(Intent.EXTRA_SUBJECT, "MyScope分享")
+                    i.putExtra(Intent.EXTRA_TEXT, "我在使用MyScope，快來一起建立自己的社交圈吧!")
+                    startActivity(Intent.createChooser(i, "MyScope分享"))
                 }
                 R.id.nav_send -> {
                     val sp = UserInfoSharedPreferences(this@MainActivity)
