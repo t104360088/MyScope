@@ -3,35 +3,36 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-                android:id="@+id/nav_info"
-                android:icon="@drawable/ic_menu_gallery"
-                android:title="@string/menu_info"/>
-        <item
-                android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_menu_camera"
-                android:title="@string/menu_logout"/>
-        <item
-                android:id="@+id/nav_slideshow"
-                android:icon="@drawable/ic_menu_slideshow"
-                android:title="@string/menu_slideshow"/>
-        <item
-                android:id="@+id/nav_tools"
-                android:icon="@drawable/ic_menu_manage"
-                android:title="@string/menu_tools"/>
-    </group>
+    <!--<group android:checkableBehavior="single">-->
+        <!--<item-->
+                <!--android:id="@+id/nav_info"-->
+                <!--android:icon="@drawable/ic_menu_profile"-->
+                <!--android:title="@string/menu_info"/>-->
+        <!--<item-->
+                <!--android:id="@+id/nav_logout"-->
+                <!--android:icon="@drawable/ic_menu_exit"-->
+                <!--android:title="@string/menu_logout"/>-->
+    <!--</group>-->
 
-    <item android:title="其他服務">
+    <item
+            android:id="@+id/nav_info"
+            android:icon="@drawable/ic_menu_profile"
+            android:title="@string/menu_info"/>
+    <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_menu_exit"
+            android:title="@string/menu_logout"/>
+
+    <item android:title="@string/menu_other_service">
         <menu>
             <item
                     android:id="@+id/nav_share"
                     android:icon="@drawable/ic_menu_share"
-                    android:title="分享出去"/>
+                    android:title="@string/menu_share"/>
             <item
                     android:id="@+id/nav_send"
                     android:icon="@drawable/ic_menu_send"
-                    android:title="意見回饋"/>
+                    android:title="@string/menu_feedback"/>
         </menu>
     </item>
 

@@ -90,7 +90,7 @@ class RemoteDatabase {
             if (snapshot != null && !snapshot.isEmpty) {
                 complete(null, snapshot.documents)
             } else {
-                //complete("Current data: null", null)
+                complete("快來發送第一則訊息吧!", null)
             }
         })
     }

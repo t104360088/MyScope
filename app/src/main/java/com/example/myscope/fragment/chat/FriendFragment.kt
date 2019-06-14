@@ -31,7 +31,6 @@ class FriendFragment : LazyLoadFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        Toast.makeText(mActivity, "好友列表", Toast.LENGTH_SHORT).show()
         initListView()
     }
 

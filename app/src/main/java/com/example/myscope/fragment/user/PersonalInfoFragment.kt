@@ -65,7 +65,6 @@ class PersonalInfoFragment : ObserverFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        Toast.makeText(mActivity, "個人頁面", Toast.LENGTH_SHORT).show()
         setActionBar()
         setEditStatus(false)
         setListen()

@@ -29,7 +29,6 @@ class ChatRoomFragment : LazyLoadFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        Toast.makeText(mActivity, "聊天室", Toast.LENGTH_SHORT).show()
         initListView()
     }
 

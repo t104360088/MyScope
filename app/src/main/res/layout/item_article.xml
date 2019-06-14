@@ -85,6 +85,7 @@
                 android:textSize="@dimen/text_medium"
                 android:maxLines="1"
                 android:ellipsize="end"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="@+id/img_avatar"
                 android:textColor="@color/colorPrimaryDark"
                 app:layout_constraintTop_toBottomOf="@+id/tv_content"/>
@@ -94,8 +95,12 @@
                 android:layout_height="0dp" app:srcCompat="@android:drawable/ic_menu_gallery"
                 android:id="@+id/img_photo"
                 app:layout_constraintStart_toStartOf="@+id/img_avatar"
-                app:layout_constraintEnd_toEndOf="@+id/tv_time" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/tv_tag" app:layout_constraintDimensionRatio="1:1"/>
+                app:layout_constraintEnd_toEndOf="@+id/tv_time"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_tag"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="8dp"/>
 
         <TextView
                 android:text="喜歡"
@@ -104,6 +109,7 @@
                 android:id="@+id/tv_like" app:layout_constraintStart_toStartOf="@+id/img_photo"
                 android:layout_marginTop="8dp"
                 android:textSize="@dimen/text_small"
+                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@+id/img_photo"/>
 
         <TextView
@@ -112,6 +118,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_comment"
                 android:textSize="@dimen/text_small"
+                android:visibility="gone"
                 app:layout_constraintTop_toTopOf="@+id/tv_like"
                 app:layout_constraintStart_toEndOf="@+id/tv_like"
                 android:layout_marginStart="32dp"/>

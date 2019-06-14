@@ -16,8 +16,6 @@ import com.example.myscope.*
 import com.example.myscope.fragment.article.ArticleTabFragment
 import com.example.myscope.fragment.chat.ChatTabFragment
 import com.example.myscope.fragment.user.PersonalInfoFragment
-import com.example.myscope.manager.ErrorMsg
-import com.example.myscope.manager.user.User
 import com.example.myscope.manager.user.UserManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
@@ -26,8 +24,8 @@ import kotlinx.android.synthetic.main.header_drawer.*
 import java.util.*
 
 class MainActivity : ObserverActivity() {
-    private var isFirstOnline = true
-    private var canUpdated = true
+    //private var isFirstOnline = true
+    //private var canUpdated = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +35,6 @@ class MainActivity : ObserverActivity() {
         setListen()
         showNavigationBottom()
         showNavigationDrawer()
-        //findViewById<View>(R.id.navigation_bottom_friend).performClick() //clickItem
         setNavigation(0)
         showSnackbar("歡迎回來")
         //研究登入流程是否要再修改
@@ -105,12 +102,6 @@ class MainActivity : ObserverActivity() {
                     switchTo(PersonalInfoFragment())
                     showNavigationBottom(false)
                     setDrawerGesture(false)
-                }
-                R.id.nav_slideshow -> {
-
-                }
-                R.id.nav_tools -> {
-
                 }
                 R.id.nav_share -> {
                     val i = Intent(Intent.ACTION_SEND)

@@ -38,7 +38,6 @@ class ChatFragment : ObserverFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        Toast.makeText(mActivity, "聊天", Toast.LENGTH_SHORT).show()
         setActionBar()
         initListView()
         setListen()

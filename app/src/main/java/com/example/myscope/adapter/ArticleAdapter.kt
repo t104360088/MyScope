@@ -26,7 +26,7 @@ import kotlin.collections.ArrayList
 
 class ArticleAdapter(context: Context, articles: ArrayList<Article>,
                      private val uid: String) :
-    ArrayAdapter<Article>(context, R.layout.item_friend, articles) {
+    ArrayAdapter<Article>(context, R.layout.item_article, articles) {
 
     private lateinit var holder: ViewHolder
     private val c: Calendar = Calendar.getInstance()
@@ -37,10 +37,10 @@ class ArticleAdapter(context: Context, articles: ArrayList<Article>,
         val tv_time: TextView = v.findViewById(R.id.tv_time)
         val img_more: ImageView = v.findViewById(R.id.img_more)
         val tv_content: TextView = v.findViewById(R.id.tv_content)
-        val tv_tag: TextView = v.findViewById(R.id.tv_tag)
+        //val tv_tag: TextView = v.findViewById(R.id.tv_tag)
         val img_photo: ImageView = v.findViewById(R.id.img_photo)
-        val tv_like: TextView = v.findViewById(R.id.tv_like)
-        val tv_comment: TextView = v.findViewById(R.id.tv_comment)
+        //val tv_like: TextView = v.findViewById(R.id.tv_like)
+        //val tv_comment: TextView = v.findViewById(R.id.tv_comment)
     }
 
     override fun getView(position: Int, convertView: View?, viewGroup: ViewGroup): View? {

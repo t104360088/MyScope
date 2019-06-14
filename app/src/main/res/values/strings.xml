@@ -10,8 +10,7 @@
 
     <string name="menu_logout">登出</string>
     <string name="menu_info">我的資訊</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_tools">Tools</string>
-    <string name="menu_share">Share</string>
-    <string name="menu_send">Send</string>
+    <string name="menu_share">分享出去</string>
+    <string name="menu_feedback">意見回饋</string>
+    <string name="menu_other_service">其他服務</string>
 </resources>
