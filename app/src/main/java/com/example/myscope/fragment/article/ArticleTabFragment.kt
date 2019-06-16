@@ -73,6 +73,7 @@ class ArticleTabFragment : ObserverFragment() {
             }
 
             listView.adapter = adapter
+            listView.emptyView = tv_empty
         }
     }
 

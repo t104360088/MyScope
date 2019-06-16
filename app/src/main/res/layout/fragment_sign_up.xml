@@ -39,13 +39,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
-                android:id="@+id/ed_pwd"/>
+                android:id="@+id/ed_pwd"
+                android:inputType="textPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
     <Button
             android:text="註冊"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_sign_up"
+            android:id="@+id/btn_sign_up"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             android:paddingStart="80dp"

@@ -41,6 +41,7 @@ class FriendFragment : LazyLoadFragment() {
             }
 
             listView.adapter = adapter
+            listView.emptyView = tv_empty
             listView.setOnItemLongClickListener { parent, view, position, id ->
                 val option = arrayOf("刪除好友")
                 DialogManager.instance.showList(mActivity, option)?.setOnItemClickListener { _, _, p, _ ->

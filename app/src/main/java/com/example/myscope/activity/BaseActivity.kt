@@ -1,13 +1,14 @@
 package com.example.myscope.activity
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.example.myscope.R
-import java.util.*
 
 abstract class BaseActivity : AppCompatActivity() {
     // Set application language
@@ -21,8 +22,6 @@ abstract class BaseActivity : AppCompatActivity() {
 //    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        if (!Method.hasPermissions(this, *PERMISSIONS))
-//            reStartApp()
 
         // Init ActionBar
         supportActionBar?.let {
@@ -33,8 +32,6 @@ abstract class BaseActivity : AppCompatActivity() {
             parent.setPadding(0, 0, 0, 0)
             parent.setContentInsetsAbsolute(0, 0)
         }
-
-        //DataManager.instance.addObserver(this)
     }
 
     private fun resetActionBar() {
@@ -103,57 +100,12 @@ abstract class BaseActivity : AppCompatActivity() {
         return btn
     }
 
-//    override fun onStart() {
-//        super.onStart()
-//        DataManager.instance.addObserver(this)
-//    }
-//
-//    override fun update(o: Observable?, arg: Any?) {
-//        if(arg is BaseRespond){
-//            when{
-//                arg.status==2 ->{
-//                    DataManager.instance.deleteObserver(this)
-//                    DataManager.instance.cleanLocalData()
-//
-//                    cleanNotification()
-//                    cancelAlarm()
-//
-//                    runOnUiThread {
-//                        DialogManager.instance.showMessage(this,getString(R.string.key_expire))
-//                            ?.setOnClickListener {
-//                                DialogManager.instance.cancelDialog()
-//                                reStartApp()
-//                            }
-//                    }
-//                }
-//                arg.status!=0 ->
-//                    runOnUiThread {
-//                        Toast.makeText(this, if(arg.errMsgs.isNotEmpty()) arg.errMsgs[0] else
-//                            getString(R.string.unexplained_error), Toast.LENGTH_SHORT).show()
-//                    }
-//            }
-//        }
-//    }
-//
-//    fun cleanNotification(){
-//        val nm = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-//        nm.cancelAll()
-//    }
-//
-//    fun cancelAlarm(){
-//        val intent = Intent(this, AlarmReceiver::class.java)
-//
-//        val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-//        am.cancel(PendingIntent.getBroadcast(this,0, intent,0))
-//    }
-//
-//    override fun onStop() {
-//        super.onStop()
-//        DataManager.instance.deleteObserver(this)
-//    }
-//
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        DialogManager.instance.dismissAll()
-//    }
+    //Avoid keyboard showing issue of press actionbar back button
+    override fun onBackPressed() {
+        this.currentFocus?.let {
+            val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(it.windowToken, 0)
+        }
+        super.onBackPressed()
+    }
 }

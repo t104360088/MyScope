@@ -60,8 +60,16 @@ class RemoteDatabase {
     }
 
     //One layer
-    fun getDocumentList(colKey: String, limit: Long, complete: (String?, List<DocumentSnapshot>?) -> Unit) {
-        db.collection(colKey).limit(limit).get().addOnCompleteListener {
+    fun getDocumentList(colKey: String, limit: Long, orderBy: String? = null, isOrderAscent: Boolean = true, complete: (String?, List<DocumentSnapshot>?) -> Unit) {
+        val path = if (orderBy == null)
+            db.collection(colKey).limit(limit)
+        else
+            if (isOrderAscent)
+                db.collection(colKey).orderBy(orderBy).limit(limit)
+            else
+                db.collection(colKey).orderBy(orderBy, Query.Direction.DESCENDING).limit(limit)
+
+        path.get().addOnCompleteListener {
             when {
                 it.exception != null -> complete(it.exception?.message, null)
                 it.isSuccessful -> complete(null, it.result?.documents)
@@ -70,8 +78,16 @@ class RemoteDatabase {
     }
 
     //Two layers
-    fun getDocumentList(colKey: String, docKey: String, colKey2: String, limit: Long, complete: (String?, List<DocumentSnapshot>?) -> Unit) {
-        db.collection(colKey).document(docKey).collection(colKey2).limit(limit).get().addOnCompleteListener {
+    fun getDocumentList(colKey: String, docKey: String, colKey2: String, limit: Long, orderBy: String? = null, isOrderAscent: Boolean = true, complete: (String?, List<DocumentSnapshot>?) -> Unit) {
+        val path = if (orderBy == null)
+            db.collection(colKey).document(docKey).collection(colKey2).limit(limit)
+        else
+            if (isOrderAscent)
+                db.collection(colKey).document(docKey).collection(colKey2).orderBy(orderBy).limit(limit)
+            else
+                db.collection(colKey).document(docKey).collection(colKey2).orderBy(orderBy, Query.Direction.DESCENDING).limit(limit)
+
+        path.get().addOnCompleteListener {
             when {
                 it.exception != null -> complete(it.exception?.message, null)
                 it.isSuccessful -> complete(null, it.result?.documents)

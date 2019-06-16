@@ -34,7 +34,7 @@ class UserManager : Observable() {
                     it.result?.user?.run {
                         val index = Regex("""@""").find(this.email ?: "")?.range?.start
                         val name = this.email?.substring(0, index ?: 0)
-                        setUserData(User(this.uid, this.email ?: "", name = name))
+                        setUserData(User(this.uid, this.email ?: "", name = name), false)
                     }
                     sendEmailVerification()
                     notifyChanged(Response_SignUp)
@@ -97,19 +97,22 @@ class UserManager : Observable() {
         }
     }
 
-    fun setUserData(user: User) {
+    fun setUserData(user: User, notifyObserver: Boolean = true) {
         getCurrentUser()?.run {
             RemoteDatabase.instance.setDocument("User", this.uid, user) {
-                Log.e("UserManager", "setUserData")
-                when (it) {
-                    null -> notifyChanged(Response_SetUser)
-                    else -> notifyChanged(ErrorMsg(it))
-                }
+                Log.e("UserManager", "setUserData, notifyObserver: $notifyObserver")
+                if (notifyObserver)
+                    when (it) {
+                        null -> notifyChanged(Response_SetUser)
+                        else -> notifyChanged(ErrorMsg(it))
+                    }
             }
             return@run
         } ?: run {
-            val msg = ErrorMsg("無法獲取此帳號資料，請重新登入")
-            notifyChanged(msg)
+            if (notifyObserver) {
+                val msg = ErrorMsg("無法獲取此帳號資料，請重新登入")
+                notifyChanged(msg)
+            }
         }
     }
 

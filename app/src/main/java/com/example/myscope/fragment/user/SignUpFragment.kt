@@ -35,7 +35,7 @@ class SignUpFragment : ObserverFragment() {
     }
 
     private fun setListen() {
-        tv_sign_up.setOnClickListener {
+        btn_sign_up.setOnClickListener {
             val email = ed_email.text.toString()
             val pwd = ed_pwd.text.toString()
             if (email.isNotEmpty() && pwd.isNotEmpty()) {

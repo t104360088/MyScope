@@ -29,7 +29,7 @@ class ArticleManager : Observable() {
     }
 
     fun getArticleList() {
-        RemoteDatabase.instance.getDocumentList("Article", 10) {
+        RemoteDatabase.instance.getDocumentList("Article", 10, "timestamp", false) {
                 msg, list ->
             if (msg != null) {
                 notifyChanged(ErrorMsg(msg))

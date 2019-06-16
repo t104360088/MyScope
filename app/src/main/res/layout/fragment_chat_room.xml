@@ -9,4 +9,12 @@
             android:layout_height="match_parent"
             android:divider="@null"
             android:id="@+id/listView"/>
+
+    <TextView
+            android:text="交新朋友\n脫離邊緣人"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/tv_empty"
+            android:gravity="center"
+            android:textSize="@dimen/text_large"/>
 </LinearLayout>

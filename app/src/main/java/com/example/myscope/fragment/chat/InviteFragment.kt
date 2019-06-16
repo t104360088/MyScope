@@ -40,6 +40,7 @@ class InviteFragment : LazyLoadFragment() {
             }
 
             listView.adapter = adapter
+            listView.emptyView = tv_empty
         }
     }
 

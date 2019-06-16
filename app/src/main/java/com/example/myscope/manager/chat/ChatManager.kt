@@ -64,7 +64,7 @@ class ChatManager : Observable() {
     }
 
     fun getChatRoomList(uid: String) {
-        RemoteDatabase.instance.getDocumentList("ChatRoom", uid, "Setting", 10) {
+        RemoteDatabase.instance.getDocumentList("ChatRoom", uid, "Setting", 10, "lastTime", false) {
                 msg, list ->
             if (msg != null) {
                 notifyChanged(ErrorMsg(msg))

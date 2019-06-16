@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.example.myscope.R
 import com.example.myscope.activity.MainActivity
 import com.example.myscope.adapter.ChatRoomAdapter
@@ -14,7 +13,7 @@ import com.example.myscope.manager.chat.ChatManager
 import com.example.myscope.manager.chat.ChatRoom
 import com.example.myscope.manager.chat.ChatRoomList
 import com.example.myscope.manager.user.UserManager
-import kotlinx.android.synthetic.main.fragment_friend.*
+import kotlinx.android.synthetic.main.fragment_chat_room.*
 import java.util.*
 
 class ChatRoomFragment : LazyLoadFragment() {
@@ -39,6 +38,7 @@ class ChatRoomFragment : LazyLoadFragment() {
             }
 
             listView.adapter = adapter
+            listView.emptyView = tv_empty
             listView.setOnItemClickListener { parent, view, position, id ->
                 val b = Bundle()
                 b.putSerializable("Room", room[position])

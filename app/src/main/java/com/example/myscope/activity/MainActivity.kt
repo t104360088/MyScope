@@ -90,7 +90,12 @@ class MainActivity : ObserverActivity() {
         nav_drawer.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_logout -> {
+                    //Clean data
+                    val sp = UserInfoSharedPreferences(this@MainActivity)
+                    sp.clearUserData()
                     UserManager.instance.signOut()
+
+                    //Adjust the close animation
                     drawerLayout.closeDrawer(GravityCompat.START)
                     Handler().postDelayed({
                         startActivity(Intent(this, EnterActivity::class.java))

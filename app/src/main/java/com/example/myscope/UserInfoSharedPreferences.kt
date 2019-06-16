@@ -28,6 +28,12 @@ class UserInfoSharedPreferences(context: Context) {
         sp.edit().remove(Password).apply()
     }
 
+    fun clearUserData() {
+        sp.edit().remove(Name).apply()
+        sp.edit().remove(Avatar).apply()
+        sp.edit().remove(Background).apply()
+    }
+
     fun setUserID(id: String) = sp.edit().putString(UserID, id).apply()
 
     fun setName(name: String) = sp.edit().putString(Name, name).apply()
